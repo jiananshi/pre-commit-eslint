@@ -1,11 +1,14 @@
 {
   "name": "pre-commit-eslint",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
     "postinstall": "node ./index.js"
   },
   "author": "WXiaoming",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^3.10.2"
+  }
 }
