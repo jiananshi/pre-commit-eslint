@@ -1,0 +1,11 @@
+{
+  "name": "pre-commit",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node ./index.js"
+  },
+  "author": "WXiaoming",
+  "license": "MIT"
+}
