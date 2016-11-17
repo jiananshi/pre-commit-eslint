@@ -15,7 +15,7 @@ function readFile() {
 
 function writeFile(raw) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(`${hookDir}/pre-commit`, raw, (err) => {
+    fs.writeFile(`${hookDir}/pre-commit`, raw, { mode: '0755' }, (err) => {
       if (err) return reject(err);
       resolve();
     });
