@@ -6,8 +6,8 @@
   "scripts": {
     "postinstall": "node ./index.js"
   },
-  "author": "WXiaoming",
   "license": "MIT",
+  "author": "shijn",
   "dependencies": {
     "eslint": "^3.10.2"
   }
