@@ -1,14 +1,19 @@
 {
   "name": "pre-commit-eslint",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node ./index.js"
+    "postinstall": "node ./index.js",
+    "test": "./node_modules/ava/cli.js"
   },
   "license": "MIT",
-  "author": "shijn",
-  "dependencies": {
+  "author": "jiananshi",
+  "peerDependencies": {
     "eslint": "^3.10.2"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "power-assert": "^1.4.2"
   }
 }
