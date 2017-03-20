@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const PRECOMMIT_FILE = './pre-commit.txt';
-const ESLINT_FILE = './eslintrc.txt';
+const PRECOMMIT_FILE = './pre-commit.sh';
+const ESLINT_FILE = './.eslintrc';
 
 const root = path.resolve(__dirname, '..', '..');
 const hookDir = path.resolve(root, '.git', './hooks');
