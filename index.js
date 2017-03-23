@@ -1,49 +1,25 @@
-const path = require('path');
-const fs = require('fs');
-const PRECOMMIT_FILE = './pre-commit.sh';
-const ESLINT_FILE = './.eslintrc';
+import path from 'path';
+import fs from 'fs';
+import promisify from './promisify';
 
-const root = path.resolve(__dirname, '..', '..');
-const hookDir = path.resolve(root, '.git', './hooks');
+const PRECOMMIT = './pre-commit.sh';
+const ESLINT = './.eslintrc';
 
-const ESLINT_FILE_TARGET = path.resolve(root, './.eslintrc');
+// will be installed at `node_modules`
+const root = process.env === 'test ' ? path.resolve(__dirname, '..', '..') : __dirname;
+const ESLINT_TARGET = path.resolve(root, './.eslintrc');
+// in case current user can't read
+const mode = '0755';
 
-function readFile(filename) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(filename, 'utf8', (err, data) => {
-      if (err) return reject(err);
-      resolve(data);
-    });
-  });
-}
+['readFile', 'writeFile', 'stat'].forEach(method => fs[method] = promisify(fs[method]));
 
-function writeFile(raw, target) {
-  return new Promise((resolve, reject) => {
-    fs.writeFile(target, raw, { mode: '0755' }, (err) => {
-      if (err) return reject(err);
-      resolve();
-    });
-  });
-}
-
-function checkFile(target) {
-  return new Promise((resolve, reject) => {
-    fs.stat(target, (err) => {
-      if (err) return reject(err);
-      resolve();
-    });
-  });
-}
-
-readFile(PRECOMMIT_FILE)
-  .then(raw => writeFile(raw, `${hookDir}/pre-commit`))
+fs.readFile(PRECOMMIT, 'utf8')
+  .then(raw => fs.writeFile(`${path.resolve(root, '.git/hooks')}/pre-commit`, raw, { mode }))
   .then(() => console.log('Git pre-commit set up success!'))
-  .catch(e => console.log(`Git pre-commit set up fail due to: ${e}`))
+  .catch(e => console.log(`Git pre-commit set up fail due to: ${e}`));
 
-checkFile(ESLINT_FILE_TARGET)
-  .catch(() => {
-    return readFile(ESLINT_FILE)
-      .then(raw => writeFile(raw, ESLINT_FILE_TARGET));
-  })
+fs.stat(ESLINT_TARGET)
+  .catch(() => fs.readFile(ESLINT).then(raw => fs.writeFile(raw, ESLINT_TARGET, { mode })))
   .then(() => console.log('Eslintrc set up success!'))
   .catch(e => console.log(`Eslintrc set up fail due to: ${e}`));
+

@@ -1,11 +1,12 @@
 {
   "name": "pre-commit-eslint",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "node ./index.js",
-    "test": "./node_modules/ava/cli.js"
+    "postinstall": "babel-node ./index.js",
+    "test": "NODE_ENV=test babel-node ./index.js",
+    "clear": "rm ./git/hooks/pre-commit"
   },
   "license": "MIT",
   "author": "jiananshi",
@@ -13,7 +14,10 @@
     "eslint": "^3.10.2"
   },
   "devDependencies": {
-    "ava": "^0.17.0",
-    "power-assert": "^1.4.2"
+    "babel-cli": "^6.24.0",
+    "babel-preset-es2015": "^6.24.0",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2",
+    "should": "^11.2.1"
   }
 }
